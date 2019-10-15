@@ -1,6 +1,7 @@
 package model.data_structures;
 
-public class HashTable {
+public class HashTable 
+{
     private static int INITIAL_SIZE = 16;
     private HashEntry[] entries = new HashEntry[INITIAL_SIZE];
     public void put(String key, String value) {
