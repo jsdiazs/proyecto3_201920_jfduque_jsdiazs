@@ -1,6 +1,7 @@
 package model.data_structures;
 
-public interface IArregloDinamico {
+public interface IArregloDinamico
+{
 
 	/**
 	 * Retornar el numero de elementos maximo en el arreglo

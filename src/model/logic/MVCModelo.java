@@ -1,13 +1,23 @@
 package model.logic;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 import com.opencsv.CSVReader;
 
 import model.data_structures.ArregloDinamico;
 import model.data_structures.IArregloDinamico;
+
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+
+
 
 /**
  * Definicion del modelo del mundo
@@ -198,6 +208,49 @@ public class MVCModelo {
 			}
 		}
 	}
+	
+	
+	    public  void JSONReader() throws Exception 
+	    {
+	        FileInputStream inputStream = new FileInputStream("data/bogota_cadastral.json");
+	        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+	        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 
-}
+	        FCollection g = new Gson().fromJson(bufferedReader, FCollection.class);
+	        System.out.println(g);
+	    }
+
+	    
+	    class Properties 
+	    {
+	    	long cartodb_id;
+	        String scacodigo;
+	        long scatipo;
+	        String scanombre;
+	        double shape_leng;
+	        double shape_area;
+	        String MOVEMENT_ID;
+	        String DISPLAY_NAME;
+	    }
+
+	    class GeometryData {
+	        String type;
+	        double[][][][] coordinates;
+
+	    }
+
+	    class Feature {
+	        String type;
+	        GeometryData geometry;
+	        Properties properties;
+	    }
+
+	    class FCollection 
+	    {
+	        String type;
+	        Feature[] features;
+	    }
+	}
+	
+

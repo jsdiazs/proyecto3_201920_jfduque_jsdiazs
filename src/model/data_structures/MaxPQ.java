@@ -1,6 +1,7 @@
 package model.data_structures;
 // Java program to implement Max Heap 
-public class MaxPQ<Item>{ 
+public class MaxPQ<Viaje>
+{ 
 	private int[] Heap; 
 	private int size; 
 	private int maxsize; 
