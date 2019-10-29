@@ -29,31 +29,71 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		funciones();
 	}
 
 	
-	public void cargaDatos()
+	public void funciones()
 	{
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
 		String dato = "";
 		String respuesta = "";
-
+		
+		System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+		view.printMenu();
+		
 		while( !fin )
 		{
 
 			int option = lector.nextInt();
 			switch(option){
 			case 1:
-				modelo.cargaDatos();
-				try {
-					modelo.JSONReader();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				modelo.function1();
+				
+				funciones();
+				break;
+			case 2:
+				modelo.function2();
+				
+				funciones();
+				break;
+			case 3:
+				modelo.function3();
+				
+				funciones();
 				break;
 			case 4:
+				modelo.function4();
+				
+				funciones();
+				break;
+			case 5:
+				modelo.function5();
+				
+				funciones();
+				break;
+			case 6:
+				modelo.function6();
+				
+				funciones();
+				break;
+			case 7:
+				modelo.function7();
+				
+				funciones();
+				break;
+			case 8:
+				modelo.function8();
+				
+				funciones();
+				break;
+			case 9:
+				modelo.function9();
+				
+				funciones();
+				break;
+			case 10:
 				System.out.println("--------- \n Hasta pronto !! \n---------"); 
 				lector.close();
 				fin = true;

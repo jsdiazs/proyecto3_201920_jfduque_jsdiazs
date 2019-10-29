@@ -248,6 +248,55 @@ public class MVCModelo {
 	        Feature[] features;
 	    }
 	    
+	    
+	    //----------------------------------------------------------
+	    //METODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
+	    
+	    public void function1()
+	    {
+	    	
+	    }
+	    
+	    public void function2()
+	    {
+	    	
+	    }
+	    
+	    public void function3()
+	    {
+	    	
+	    }
+	    
+	    public void function4()
+	    {
+	    	
+	    }
+	    
+	    public void function5()
+	    {
+	    	
+	    }
+	    
+	    public void function6()
+	    {
+	    	
+	    }
+	    
+	    public void function7()
+	    {
+	    	
+	    }
+	    
+	    public void function8()
+	    {
+	    	
+	    }
+	    
+	    public void function9()
+	    {
+	    	
+	    }
+	    
 	}
 	
 
