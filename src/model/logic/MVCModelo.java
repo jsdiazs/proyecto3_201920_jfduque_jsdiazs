@@ -75,140 +75,130 @@ public class MVCModelo {
 		return datos.eliminar(dato);
 	}
 
-	public void CSVreaderHour(int pTrimestre)
-	{
-		if(pTrimestre > 4)
-		{
-			System.out.print("Numero de trimestre inválido ");
-		}
-		else
-		{
-			int trimestre = pTrimestre;
-			CSVReader reader = null;
-			try {
-				reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-" + pTrimestre + "-All-HourlyAggregate.csv"));			
-				String[] nextline = reader.readNext();
-				nextline = reader.readNext();
-				int n = 0;
-				while(nextline != null)
-				{					
-					int   sourceid = Integer.parseInt(nextline[0]);
-					int   dstid = Integer.parseInt(nextline[1]);
-					int   dayHourMonth = Integer.parseInt(nextline[2]);
-					float mean_travel_time = Float.parseFloat(nextline[3]);
-					float standard_deviation_travel_time = Float.parseFloat(nextline[4]);
-					float geometric_mean_travel_time = Float.parseFloat(nextline[5]);
-					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
-					n++;
-					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-
-					nextline = reader.readNext();					
-				}
-				System.out.println("");
-				System.out.println("El trimestre elegio fue: 2018-" +  pTrimestre +  "."  );
-				System.out.println("La cantidad de viajes fueron: "+ n + "." );
-				System.out.println("");
-				reader.close();
-
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void CSVreaderWeek(int pTrimestre)
-	{
-		if(pTrimestre > 4)
-		{
-			System.out.print("Numero de trimestre inválido ");
-		}
-		else
-		{
-
-			CSVReader reader = null;
-			try {
-				reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-" + pTrimestre + "-WeeklyAggregate.csv"));			
-				String[] nextline = reader.readNext();
-				nextline = reader.readNext();
-				int n = 0;
-				while(nextline != null)
-				{					
-					int   sourceid = Integer.parseInt(nextline[0]);
-					int   dstid = Integer.parseInt(nextline[1]);
-					int   dayHourMonth = Integer.parseInt(nextline[2]);
-					float mean_travel_time = Float.parseFloat(nextline[3]);
-					float standard_deviation_travel_time = Float.parseFloat(nextline[4]);
-					float geometric_mean_travel_time = Float.parseFloat(nextline[5]);
-					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
-					n++;
-					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-
-					nextline = reader.readNext();					
-				}
-				System.out.println("");
-				System.out.println("El trimestre elegio fue: 2018-" +  pTrimestre +  "."  );
-				System.out.println("La cantidad de viajes fueron: "+ n + "." );
-				System.out.println("");
-				reader.close();
-
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void CSVreaderMonth(int pTrimestre)
-	{
-		if(pTrimestre > 4)
-		{
-			System.out.print("Numero de trimestre inválido ");
-		}
-		else
-		{
-			CSVReader reader = null;
-			try {
-				reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-" + pTrimestre + "-All-MonthlyAggregate.csv"));			
-				String[] nextline = reader.readNext();
-				nextline = reader.readNext();
-				int n = 0;
-				while(nextline != null && n < 100)
-				{					
-					int   sourceid = Integer.parseInt(nextline[0]);
-					int   dstid = Integer.parseInt(nextline[1]);
-					int   dayHourMonth = Integer.parseInt(nextline[2]);
-					float mean_travel_time = Float.parseFloat(nextline[3]);
-					float standard_deviation_travel_time = Float.parseFloat(nextline[4]);
-					float geometric_mean_travel_time = Float.parseFloat(nextline[5]);
-					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
-					n++;
-					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-					nextline = reader.readNext();					
-				}
-
-				System.out.println("");
-				System.out.println("El trimestre elegio fue: 2018-" +  pTrimestre +  "."  );
-				System.out.println("La cantidad de viajes fueron: "+ n + "." );
-				System.out.println("");
-				reader.close();
-
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+	//----------------------------------------------------------------------------------------
+	//CSV READER
 	
+	public void cargaDatos()
+	{
+			int totalViajes = 0;
+			
+			//-----------------------------------
+			//Lectura para hora
+			
+			CSVReader readerHour = null;
+			try {
+				readerHour = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));			
+				String[] nextline = readerHour.readNext();
+				nextline = readerHour.readNext();
+				int h = 0;
+				while(nextline != null)
+				{					
+					int   sourceid = Integer.parseInt(nextline[0]);
+					int   dstid = Integer.parseInt(nextline[1]);
+					int   dayHourMonth = Integer.parseInt(nextline[2]);
+					float mean_travel_time = Float.parseFloat(nextline[3]);
+					float standard_deviation_travel_time = Float.parseFloat(nextline[4]);
+					float geometric_mean_travel_time = Float.parseFloat(nextline[5]);
+					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
+					h++;
+					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
+
+					nextline = readerHour.readNext();					
+				}
+				readerHour.close();
+				
+				totalViajes += h;
+				
+				System.out.println("");
+				System.out.println("El número de viajes por hora fueron: " + h);
+
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//-----------------------------------
+			//Lectura para semana
+			
+			CSVReader readerWeek = null;
+			try {
+				readerWeek = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-WeeklyAggregate.csv"));			
+				String[] nextline = readerWeek.readNext();
+				nextline = readerWeek.readNext();
+				int w = 0;
+				while(nextline != null)
+				{					
+					int   sourceid = Integer.parseInt(nextline[0]);
+					int   dstid = Integer.parseInt(nextline[1]);
+					int   dayHourMonth = Integer.parseInt(nextline[2]);
+					float mean_travel_time = Float.parseFloat(nextline[3]);
+					float standard_deviation_travel_time = Float.parseFloat(nextline[4]);
+					float geometric_mean_travel_time = Float.parseFloat(nextline[5]);
+					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
+					w++;
+					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
+
+					nextline = readerWeek.readNext();					
+				}
+				readerWeek.close();
+				
+				totalViajes += w;
+				
+
+				System.out.println("El número de viajes por semana fueron: " + w);
+
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//-----------------------------------
+			//Lectura para mes
+			
+			CSVReader readerMonth = null;
+			try {
+				readerMonth = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-All-MonthlyAggregate.csv"));			
+				String[] nextline = readerMonth.readNext();
+				nextline = readerMonth.readNext();
+				int m = 0;
+				while(nextline != null)
+				{					
+					int   sourceid = Integer.parseInt(nextline[0]);
+					int   dstid = Integer.parseInt(nextline[1]);
+					int   dayHourMonth = Integer.parseInt(nextline[2]);
+					float mean_travel_time = Float.parseFloat(nextline[3]);
+					float standard_deviation_travel_time = Float.parseFloat(nextline[4]);
+					float geometric_mean_travel_time = Float.parseFloat(nextline[5]);
+					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
+					m++;
+					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
+
+					nextline = readerMonth.readNext();					
+				}
+				readerWeek.close();
+				
+				totalViajes += m;
+				
+				System.out.println("El número de viajes por mes fueron: " + m);
+				System.out.println("El número de viajes por Totales fueron: " + totalViajes);
+
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+		//--------------------------------------------------------------------------------------
+		//JSON READER
 	
 	    public  void JSONReader() throws Exception 
 	    {

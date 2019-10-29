@@ -24,7 +24,7 @@ public class Controller {
 		modelo = new MVCModelo();
 	}
 
-	public void runHourWeekMonth()
+	public void cargaDatos()
 	{
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
@@ -33,18 +33,18 @@ public class Controller {
 
 		while( !fin )
 		{
-			view.HourWeekMonth();
+			view.cargarDatos();
 
 			int option = lector.nextInt();
 			switch(option){
 			case 1:
-				runHour();
-				break;
-			case 2:
-				runWeek();
-				break;
-			case 3:
-				runMonth();
+				modelo.cargaDatos();
+				try {
+					modelo.JSONReader();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case 4:
 				System.out.println("--------- \n Hasta pronto !! \n---------"); 
@@ -55,63 +55,6 @@ public class Controller {
 			fin=true;
 		}
 	}
-	
-	public void runHour()
-	{
-		Scanner lector = new Scanner(System.in);
-		boolean fin = false;
-		String dato = "";
-		String respuesta = "";
-		
-		view.printTrimestre();
-		int option = lector.nextInt();
-		modelo.CSVreaderHour(option);
-		printMenu3();
-	}
-
-	public void runWeek() 
-	{
-
-		Scanner lector = new Scanner(System.in);
-		boolean fin = false;
-		String dato = "";
-		String respuesta = "";
-		
-		view.printTrimestre();
-		int option = lector.nextInt();
-		modelo.CSVreaderWeek(option);
-		printMenu1();
-	}	
-
-	public void runMonth()	
-	{
-		
-		Scanner lector = new Scanner(System.in);
-		boolean fin = false;
-		String dato = "";
-		String respuesta = "";
-		
-		view.printTrimestre();
-		int option = lector.nextInt();
-		modelo.CSVreaderMonth(option);
-		printMenu2();
-	}	
-	
-	public void printMenu1()
-	{
-
-	}
-	
-	public void printMenu2()
-	{
-		
-	}
-	
-	public void printMenu3()
-	{
-		
-	}
-	
 	
 }
 
