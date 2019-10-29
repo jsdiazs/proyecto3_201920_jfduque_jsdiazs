@@ -23,8 +23,9 @@ public class ArbolRojoNegro<Key extends Comparable <Key>,Value> {
 			 this.size = size;
 		 }
 	}
+
      public ArbolRojoNegro() 
-	{
+     {
 	}
 	
 	private boolean esRojo(Node x)
