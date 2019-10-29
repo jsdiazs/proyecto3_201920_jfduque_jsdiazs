@@ -153,10 +153,6 @@ public class MVCModelo {
 				readerWeek.close();
 				
 				totalViajes += m;
-				
-
-				System.out.println("El número de viajes por mes fueron: " + m);
-				System.out.println("El número de viajes totales  cargados por archivo CSV fureron:" + totalViajes);
 
 				System.out.println("El número de viajes por mes fue: " + m);
 				System.out.println("El número de viajes totales fue: " + totalViajes);
