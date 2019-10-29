@@ -23,7 +23,7 @@ public class ArbolRojoNegro<Key extends Comparable <Key>,Value> {
 			 this.size = size;
 		 }
 	}
-	public ArbolRedBlack()
+     public ArbolRojoNegro() 
 	{
 	}
 	

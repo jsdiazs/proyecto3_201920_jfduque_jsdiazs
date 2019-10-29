@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 import com.opencsv.CSVReader;
-
-
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -138,7 +136,7 @@ public class MVCModelo {
 				totalViajes += m;
 				
 				System.out.println("El número de viajes por mes fueron: " + m);
-				System.out.println("El número de viajes por Totales fueron: " + totalViajes);
+				System.out.println("El número de viajes totales  cargados por archivo CSV fureron:" + totalViajes);
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -154,13 +152,15 @@ public class MVCModelo {
 	
 	    public  void JSONReader() throws Exception 
 	    {
-	        FileInputStream inputStream = new FileInputStream("data/bogota_cadastral.json");
+	    	FileInputStream inputStream = new FileInputStream("data/bogota_cadastral.json");
 	        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 	        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 
 	        FCollection g = new Gson().fromJson(bufferedReader, FCollection.class);
-	        System.out.println(g);
+	        
+	        System.out.println("Zonas cargadas por JSON fueron: " +g.features[g.features.length-1].properties.MOVEMENT_ID);
+
 	    }
 
 	    
@@ -187,7 +187,7 @@ public class MVCModelo {
 	        GeometryData geometry;
 	        Properties properties;
 	    }
-
+	    
 	    class FCollection 
 	    {
 	        String type;
