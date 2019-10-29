@@ -77,8 +77,6 @@ public class MVCModelo {
 				readerHour.close();
 				
 				totalViajes += h;
-				
-				System.out.println("");
 				System.out.println("El número de viajes por hora fue: " + h);
 
 			} catch (FileNotFoundException e1) {

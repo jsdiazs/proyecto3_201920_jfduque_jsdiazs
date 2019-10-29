@@ -22,6 +22,13 @@ public class Controller {
 	{
 		view = new MVCView();
 		modelo = new MVCModelo();
+		modelo.cargaDatos();
+		try {
+			modelo.JSONReader();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -34,7 +41,6 @@ public class Controller {
 
 		while( !fin )
 		{
-			view.cargarDatos();
 
 			int option = lector.nextInt();
 			switch(option){

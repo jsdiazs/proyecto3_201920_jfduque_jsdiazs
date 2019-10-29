@@ -12,13 +12,6 @@ public class MVCView
 	    	
 	    }
 	    
-		/**
-		 * El usuario seleccionara en que tipo de rango quiere recibir la información
-		 */
-	    public void cargarDatos()
-	    {
-	    	System.out.println("1. Cargar datos");
-	    }
 		public void printMessage(String mensaje) {
 
 			System.out.println(mensaje);
