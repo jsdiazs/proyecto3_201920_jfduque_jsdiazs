@@ -173,7 +173,7 @@ public class MVCModelo {
 			//lectura malla vial
 				CSVReader readerMalla = null;
 				try {
-					readerMalla = new CSVReader(new FileReader("./data/Malla-Vial-Bogota/Nodes_of_red_vial-wgs84_shp.txt"));			
+					readerMalla = new CSVReader(new FileReader("./data/Nodes_of_red_vial-wgs84_shp.txt"));			
 					String[] nextline1 = readerMalla.readNext();
 					nextline1 = readerMalla.readNext();
 					int v = 0;
