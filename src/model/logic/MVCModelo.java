@@ -9,14 +9,16 @@ import java.io.BufferedReader;
 
 import com.opencsv.CSVReader;
 
-import model.data_structures.ArregloDinamico;
-import model.data_structures.IArregloDinamico;
+import model.data_structures.AVLTree;
+import model.data_structures.MaxPQ;
+import model.data_structures.tablaDeHashLinearProbing;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 /**
@@ -27,52 +29,19 @@ public class MVCModelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico datos;
-
+	private AVLTree tree;
+	
+	private MaxPQ queue;
+	
+	private tablaDeHashLinearProbing table;
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public MVCModelo()
 	{
-		
-	}
-
-	/**
-	 * Servicio de consulta de numero de elementos presentes en el modelo 
-	 * @return numero de elementos presentes en el modelo
-	 */
-	public int darTamano()
-	{
-		return datos.darTamano();
-	}
-
-	/**
-	 * Requerimiento de agregar dato
-	 * @param dato
-	 */
-	public void agregar(String dato)
-	{	
-		datos.agregar(dato);
-	}
-
-	/**
-	 * Requerimiento buscar dato
-	 * @param dato Dato a buscar
-	 * @return dato encontrado
-	 */
-	public String buscar(String dato)
-	{
-		return datos.buscar(dato);
-	}
-
-	/**
-	 * Requerimiento eliminar dato
-	 * @param dato Dato a eliminar
-	 * @return dato eliminado
-	 */
-	public String eliminar(String dato)
-	{
-		return datos.eliminar(dato);
+		tree = new AVLTree();
+		queue = new MaxPQ(1000);
+		table = new tablaDeHashLinearProbing();
 	}
 
 	//----------------------------------------------------------------------------------------
@@ -102,7 +71,7 @@ public class MVCModelo {
 					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
 					h++;
 					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-
+					
 					nextline = readerHour.readNext();					
 				}
 				readerHour.close();
@@ -110,7 +79,7 @@ public class MVCModelo {
 				totalViajes += h;
 				
 				System.out.println("");
-				System.out.println("El número de viajes por hora fueron: " + h);
+				System.out.println("El número de viajes por hora fue: " + h);
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -148,7 +117,7 @@ public class MVCModelo {
 				totalViajes += w;
 				
 
-				System.out.println("El número de viajes por semana fueron: " + w);
+				System.out.println("El número de viajes por semana fue: " + w);
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -185,8 +154,8 @@ public class MVCModelo {
 				
 				totalViajes += m;
 				
-				System.out.println("El número de viajes por mes fueron: " + m);
-				System.out.println("El número de viajes por Totales fueron: " + totalViajes);
+				System.out.println("El número de viajes por mes fue: " + m);
+				System.out.println("El número de viajes totales fue: " + totalViajes);
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -195,14 +164,47 @@ public class MVCModelo {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+			//.--------------------------------------
+			//lectura malla vial
+				CSVReader readerMalla = null;
+				try {
+					readerMalla = new CSVReader(new FileReader("./data/Malla-Vial-Bogota/Nodes_of_red_vial-wgs84_shp.txt"));			
+					String[] nextline1 = readerMalla.readNext();
+					nextline1 = readerMalla.readNext();
+					int v = 0;
+					while(nextline1 != null)
+					{					
+						int   idNodo = Integer.parseInt(nextline1[0]);
+						double   longitud = Double.parseDouble(nextline1[1]);
+						double   latitud = Double.parseDouble(nextline1[2]);
+						v++;
+						nextline1 = readerMalla.readNext();		
+						
+						String longyLat = longitud + "," + latitud;
+						
+						table.put(idNodo, longyLat);
+					}
+					System.out.println("El número de nodos de la malla vial fue: " + v);
+					String llave = (String) table.get(1);
+					readerMalla.close();
+
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+		
+
 	
 		//--------------------------------------------------------------------------------------
 		//JSON READER
 	
 	    public  void JSONReader() throws Exception 
 	    {
-	        FileInputStream inputStream = new FileInputStream("data/bogota_cadastral.json");
+	        FileInputStream inputStream = new FileInputStream("./data/bogota_cadastral.json");
 	        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 	        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -241,6 +243,7 @@ public class MVCModelo {
 	        String type;
 	        Feature[] features;
 	    }
+	    
 	}
 	
 
