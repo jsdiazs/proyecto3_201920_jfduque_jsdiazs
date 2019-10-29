@@ -1,109 +1,165 @@
 package model.data_structures;
-// Java program to implement Max Heap 
-public class MaxPQ<Viaje>
+
+import java.util.Comparator;
+import java.util.NoSuchElementException;
+
+
+public class MaxPQ<T extends DinamicArray>
 { 
-	private int[] Heap; 
-	private int size; 
-	private int maxsize; 
+	    private T[] pq;                   
+	    private int n;       
+	    private int max;
+	    private Comparator<T> comparator;
 
-	// Constructor to initialize an 
-	// empty max heap with given maximum 
-	// capacity. 
-	public MaxPQ(int maxsize) 
-	{ 
-		this.maxsize = maxsize; 
-		this.size = 0; 
-		Heap = new int[this.maxsize + 1]; 
-		Heap[0] = Integer.MAX_VALUE; 
-	} 
+	    /**
+	     * Initializes an empty priority queue with the given initial capacity.
+	     *
+	     * @param  initCapacity the initial capacity of this priority queue
+	     */
+	    public MaxPQ() 
+	    {
+	        pq = (T[]) new Comparable[max + 1];
+	        n = 0;
+	        max=2;
+	    }
 
-	// Returns position of parent 
-	private int parent(int pos) 
-	{ 
-		return pos / 2; 
-	} 
 
-	// Below two functions return left and 
-	// right children. 
-	private int leftChild(int pos) 
-	{ 
-		return (2 * pos); 
-	} 
-	private int rightChild(int pos) 
-	{ 
-		return (2 * pos) + 1; 
-	} 
+	    public MaxPQ(T[] keys) {
+	        n = keys.length;
+	        pq = (T[]) new Comparable[max + 1];
+	        for (int i = 0; i < n; i++)
+	            pq[i+1] = keys[i];
+	        for (int k = n/2; k >= 1; k--)
+	            sink(k);
+	        assert isMaxHeap();
+	    }
+	      
 
-	// Returns true of given node is leaf 
-	private boolean isLeaf(int pos) 
-	{ 
-		if (pos >= (size / 2) && pos <= size) { 
-			return true; 
-		} 
-		return false; 
-	} 
+	    public boolean isEmpty() {
+	        return n == 0;
+	    }
 
-	private void swap(int fpos, int spos) 
-	{ 
-		int tmp; 
-		tmp = Heap[fpos]; 
-		Heap[fpos] = Heap[spos]; 
-		Heap[spos] = tmp; 
-	} 
+	    public int size() {
+	        return n;
+	    }
 
-	// A recursive function to max heapify the given 
-	// subtree. This function assumes that the left and 
-	// right subtrees are already heapified, we only need 
-	// to fix the root. 
-	private void maxHeapify(int pos) 
-	{ 
-		if (isLeaf(pos)) 
-			return; 
+	   
+	    public T max() 
+	    {
+	        if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
+	        return pq[1];
+	    }
 
-		if (Heap[pos] < Heap[leftChild(pos)] || 
-			Heap[pos] < Heap[rightChild(pos)]) { 
+	  
+	    private void resize(int capacity) {
+	        assert capacity > n;
+	        T[] temp = (T[]) new Comparable[capacity];
+	        for (int i = 1; i <= n; i++) {
+	            temp[i] = pq[i];
+	        }
+	        pq = temp;
+	    }
 
-			if (Heap[leftChild(pos)] > Heap[rightChild(pos)]) { 
-				swap(pos, leftChild(pos)); 
-				maxHeapify(leftChild(pos)); 
-			} 
-			else { 
-				swap(pos, rightChild(pos)); 
-				maxHeapify(rightChild(pos)); 
-			} 
-		} 
-	} 
 
-	// Inserts a new element to max heap 
-	public void insert(int element) 
-	{ 
-		Heap[++size] = element; 
+	    public void insert(T x) {
 
-		// Traverse up and fix violated property 
-		int current = size; 
-		while (Heap[current] > Heap[parent(current)]) { 
-			swap(current, parent(current)); 
-			current = parent(current); 
-		} 
-	} 
+	        
+	        if (n == pq.length - 1) resize(2 * pq.length);
 
-	public void print() 
-	{ 
-		for (int i = 1; i <= size / 2; i++) { 
-			System.out.print(" PARENT : " + Heap[i] + " LEFT CHILD : " + 
-					Heap[2 * i] + " RIGHT CHILD :" + Heap[2 * i + 1]); 
-			System.out.println(); 
-		} 
-	} 
+	        pq[++n] = x;
+	        swim(n);
+	        assert isMaxHeap();
+	    }
 
-	// Remove an element from max heap 
-	public int extractMax() 
-	{ 
-		int popped = Heap[1]; 
-		Heap[1] = Heap[size--]; 
-		maxHeapify(1); 
-		return popped; 
-	} 
-} 
+	    public T delMax() {
+	        if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
+	        T max = pq[1];
+	        exch(1, n--);
+	        sink(1);
+	        pq[n+1] = null;     
+	        if ((n > 0) && (n == (pq.length - 1) / 4)) resize(pq.length / 2);
+	        assert isMaxHeap();
+	        return max;
+	    }
 
-// Taken from https://www.geeksforgeeks.org/max-heap-in-java/
+
+	    private void swim(int k) {
+	        while (k > 1 && less(k/2, k)) {
+	            exch(k, k/2);
+	            k = k/2;
+	        }
+	    }
+
+	    private void sink(int k) {
+	        while (2*k <= n) {
+	            int j = 2*k;
+	            if (j < n && less(j, j+1)) j++;
+	            if (!less(k, j)) break;
+	            exch(k, j);
+	            k = j;
+	        }
+	    }
+
+	   
+	    private boolean less(int i, int j) {
+	        if (comparator == null) {
+	            return ((Comparable<T>) pq[i]).compareTo(pq[j]) < 0;
+	        }
+	        else {
+	            return comparator.compare(pq[i], pq[j]) < 0;
+	        }
+	    }
+
+	    private void exch(int i, int j) {
+	        T swap = pq[i];
+	        pq[i] = pq[j];
+	        pq[j] = swap;
+	    }
+
+	    private boolean isMaxHeap() {
+	        for (int i = 1; i <= n; i++) {
+	            if (pq[i] == null) return false;
+	        }
+	        for (int i = n+1; i < pq.length; i++) {
+	            if (pq[i] != null) return false;
+	        }
+	        if (pq[0] != null) return false;
+	        return isMaxHeapOrdered(1);
+	    }
+
+	
+	    private boolean isMaxHeapOrdered(int k) {
+	        if (k > n) return true;
+	        int left = 2*k;
+	        int right = 2*k + 1;
+	        if (left  <= n && less(k, left))  return false;
+	        if (right <= n && less(k, right)) return false;
+	        return isMaxHeapOrdered(left) && isMaxHeapOrdered(right);
+	    }
+
+	}
+
+	/******************************************************************************
+	 *  Copyright 2002-2018, Robert Sedgewick and Kevin Wayne.
+	 *
+	 *  This file is part of algs4.jar, which accompanies the textbook
+	 *
+	 *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
+	 *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
+	 *      http://algs4.cs.princeton.edu
+	 *
+	 *
+	 *  algs4.jar is free software: you can redistribute it and/or modify
+	 *  it under the terms of the GNU General Public License as published by
+	 *  the Free Software Foundation, either version 3 of the License, or
+	 *  (at your option) any later version.
+	 *
+	 *  algs4.jar is distributed in the hope that it will be useful,
+	 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 *  GNU General Public License for more details.
+	 *
+	 *  You should have received a copy of the GNU General Public License
+	 *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
+	 ******************************************************************************/
+
