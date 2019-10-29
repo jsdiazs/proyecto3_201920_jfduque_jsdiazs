@@ -1,24 +1,18 @@
 package model.logic;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
-
-import com.opencsv.CSVReader;
-
-import model.data_structures.AVLTree;
-import model.data_structures.MaxPQ;
-import model.data_structures.tablaDeHashLinearProbing;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import com.opencsv.CSVReader;
+
+import model.data_structures.ArbolRojoNegro;
+import model.data_structures.MaxPQ;
+import model.data_structures.tablaDeHashLinearProbing;
 
 
 /**
@@ -29,7 +23,7 @@ public class MVCModelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private AVLTree tree;
+	private ArbolRojoNegro tree;
 	
 	private MaxPQ queue;
 	
@@ -39,8 +33,8 @@ public class MVCModelo {
 	 */
 	public MVCModelo()
 	{
-		tree = new AVLTree();
-		queue = new MaxPQ(1000);
+		tree = new ArbolRojoNegro();
+		//queue = new MaxPQ();
 		table = new tablaDeHashLinearProbing();
 	}
 

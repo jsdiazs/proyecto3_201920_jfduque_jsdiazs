@@ -24,6 +24,7 @@ public class Controller {
 		modelo = new MVCModelo();
 	}
 
+	
 	public void cargaDatos()
 	{
 		Scanner lector = new Scanner(System.in);
