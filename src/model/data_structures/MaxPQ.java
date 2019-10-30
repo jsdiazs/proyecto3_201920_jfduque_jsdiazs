@@ -1,6 +1,7 @@
 package model.data_structures;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 
@@ -136,6 +137,12 @@ public class MaxPQ<T extends DinamicArray>
 	        if (right <= n && less(k, right)) return false;
 	        return isMaxHeapOrdered(left) && isMaxHeapOrdered(right);
 	    }
+
+
+		public Iterator iterator() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 	}
 
