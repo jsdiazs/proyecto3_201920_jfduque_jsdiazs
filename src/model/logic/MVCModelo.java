@@ -263,20 +263,14 @@ System.out.println(g.features[0].geometry.coordinates);
 	    //----------------------------------------------------------
 	    //METODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 	    
-<<<<<<< HEAD
 	    public void function1() {
 	    	String prueba;
 	       prueba= g.features[0].properties.DISPLAY_NAME;
-=======
+	    }
+	    
 	    public void function1()
 	    {
 	    	tablaDeHashLinearProbing tablaNombres = new tablaDeHashLinearProbing();
-	    	
-<<<<<<< HEAD
-
->>>>>>> ccbee580dbc8e0e822491ba7d967d11dd8908ebd
-=======
->>>>>>> a13130867995cbe3a1e7bca0805f89869bc1690f
 	    }
 	    
 	
@@ -318,49 +312,43 @@ System.out.println(g.features[0].geometry.coordinates);
 	        String keyMas = "";
 	        
 	        double latTemp = 0.0; 
-	        String nomTemp = ""; 
+	        String idTemp = ""; 
 	        double longTemp = 0.0;
-	        String llaveTemp = "";
+	        String KeyTemp = "";
 	        Feature zonaTemp; 
 
 	        double[] arrTempCoord = new double[2];
 
-	        while(n>0)
+	        while(nZonas>0)
 	        {
 	            LinkedQueue que = (LinkedQueue) copia.keys(); 
 	            Iterator iter = que.iterator();
 
-	            while(iter.hasNext()) //Iterar sobre la copia de Keys
+	            while(iter.hasNext()) 
 	            {
-	                String keyActual= (String) iter.next(); //Key actual
+	                String keyActual= (String) iter.next(); 
+	                Feature zonaActual = copia.get(keyActual); 
 
-	                Feature zona = copia.get(keyActual);  //Valor de la Key actual, es decir la zona. 
-
-	                double [][][][] coordenadas= zona.getGeometrias().getCoordinates(); //Arreglo de coordenadas de la zona
-
-
-
-
+	                double [][][][] Cords= zonaActual.geometry.coordinates; 
 	                int i=0;
-	                while(i<coordenadas.length)
+	                while(i<Cords.length)
 	                {
 	                    int j=0;
-	                    while(j<coordenadas[i].length)
+	                    while(j<Cords[i].length)
 	                    {
-	                        int z=0;
-	                        while(z<coordenadas[i][j].length)
+	                        int x=0;
+	                        while(x<Cords[i][j].length)
 	                        {
-	                            int w=0;
-	                            while(w<coordenadas[i][j][z].length)
+	                            int y=0;
+	                            while(y<Cords[i][j][x].length)
 	                            {
-	                                double[] coordenada = coordenadas[i][j][z]; //Coordenadas en la posicion i, j & z 
-
-	                                double lat = coordenada[1];
-	                                double lon = coordenada[0];
+	                                double[] Cord = Cords[i][j][x]; 
+	                                double lat = Cord[1];
+	                                double lon = Cord[0];
 
 	                                Object[] nodo = new Object[3];
 
-	                                String llave= zona.getPropiedades().getMOVEMENT_ID();
+	                                String llave= zonaActual.getPropiedades().getMOVEMENT_ID();
 
 	                                nodo[0]= zona.getPropiedades().getScanombre();
 	                                nodo[1]= lat;
@@ -407,16 +395,9 @@ System.out.println(g.features[0].geometry.coordinates);
 	        }
 
 
-
-
-
-
-
 	        return retorno;
 	    }
 
-
-	    }
 	    
 	    public ArbolRojoNegro<String, Object[]> function5(double latitud, double longitud)
 	    {
