@@ -31,7 +31,9 @@ public class MVCModelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private ArbolRojoNegro tree;
+	private ArbolRojoNegro arbolHora;
+	private ArbolRojoNegro arbolSemana;
+	private ArbolRojoNegro arbolMes;
 	
 	private MaxPQ queue;
 	
@@ -45,7 +47,9 @@ public class MVCModelo {
 	 */
 	public MVCModelo()
 	{
-		tree = new ArbolRojoNegro();
+		arbolHora = new ArbolRojoNegro();
+		arbolSemana = new ArbolRojoNegro();
+		arbolMes = new ArbolRojoNegro();
 		//queue = new MaxPQ();
 		table = new tablaDeHashLinearProbing();
 	}
@@ -66,7 +70,7 @@ public class MVCModelo {
 				String[] nextline = readerHour.readNext();
 				nextline = readerHour.readNext();
 				int h = 0;
-				while(nextline != null)
+				while(nextline != null && h < 10000)
 				{					
 					int   sourceid = Integer.parseInt(nextline[0]);
 					int   dstid = Integer.parseInt(nextline[1]);
@@ -77,7 +81,7 @@ public class MVCModelo {
 					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
 					h++;
 					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-					
+					arbolHora.put(h, nuevo);
 					nextline = readerHour.readNext();					
 				}
 				readerHour.close();
@@ -102,7 +106,7 @@ public class MVCModelo {
 				String[] nextline = readerWeek.readNext();
 				nextline = readerWeek.readNext();
 				int w = 0;
-				while(nextline != null)
+				while(nextline != null && w < 10000)
 				{					
 					int   sourceid = Integer.parseInt(nextline[0]);
 					int   dstid = Integer.parseInt(nextline[1]);
@@ -113,7 +117,7 @@ public class MVCModelo {
 					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
 					w++;
 					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-
+					arbolSemana.put(w, nuevo);
 					nextline = readerWeek.readNext();					
 				}
 				readerWeek.close();
@@ -140,7 +144,7 @@ public class MVCModelo {
 				String[] nextline = readerMonth.readNext();
 				nextline = readerMonth.readNext();
 				int m = 0;
-				while(nextline != null)
+				while(nextline != null && m < 10000)
 				{					
 					int   sourceid = Integer.parseInt(nextline[0]);
 					int   dstid = Integer.parseInt(nextline[1]);
@@ -151,7 +155,7 @@ public class MVCModelo {
 					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
 					m++;
 					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-
+					arbolMes.put(m, nuevo);
 					nextline = readerMonth.readNext();					
 				}
 				readerWeek.close();
@@ -259,9 +263,44 @@ System.out.println(g.features[0].geometry.coordinates);
 	    //----------------------------------------------------------
 	    //METODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 	    
+<<<<<<< HEAD
 	    public void function1() {
 	    	String prueba;
 	       prueba= g.features[0].properties.DISPLAY_NAME;
+=======
+	    public void function1()
+	    {
+	    	int a = 0;
+	    	int b = 0;
+	    	int c = 0;
+	    	int d = 0;
+	    	int e = 0;
+	    	int f = 0;
+	    	int g = 0;
+	    	int h = 0;
+	    	int i = 0;
+	    	int j = 0;
+	    	int k = 0;
+	    	int l = 0;
+	    	int m = 0;
+	    	int n = 0;
+	    	int ñ = 0;
+	    	int o = 0;
+	    	int p = 0;
+	    	int q = 0;
+	    	int r = 0;
+	    	int s = 0;
+	    	int t = 0; 
+	    	int u = 0;
+	    	int v = 0;
+	    	int w = 0;
+	    	int x = 0;
+	    	int y = 0;
+	    	int z = 0;
+	    	
+	    	
+
+>>>>>>> ccbee580dbc8e0e822491ba7d967d11dd8908ebd
 	    }
 	    
 	
@@ -270,7 +309,7 @@ System.out.println(g.features[0].geometry.coordinates);
 	    	
 	    }
 	    
-	    public void function3()
+	    public void function3(int pN, int pLb, int pLa)
 	    {
 	    	
 	    }

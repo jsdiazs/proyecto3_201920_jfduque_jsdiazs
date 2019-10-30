@@ -36,4 +36,15 @@ public class MVCView
 		{
 			// TODO implementar
 		}
+
+		public void printFuncion31() {
+			System.out.println("Ingrese el numero de viajes que desea consultar: ");
+		}
+		
+		public void printFuncion32() {
+			System.out.println("Ingrese el timpo de incio: ");
+		}
+		public void printFuncion33() {
+			System.out.println("Ingrese el tiempo final: ");
+		}
 }
