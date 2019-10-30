@@ -10,13 +10,14 @@ import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.opencsv.CSVReader;
-
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
 import model.data_structures.ArbolRojoNegro;
+import model.data_structures.DinamicArray;
+import model.data_structures.LinkedQueue;
 import model.data_structures.MaxPQ;
 import model.data_structures.tablaDeHashLinearProbing;
 
@@ -37,6 +38,10 @@ public class MVCModelo {
 	private MaxPQ queue;
 	
 	private tablaDeHashLinearProbing table;
+	
+	private FCollection g;
+
+	private tablaDeHashLinearProbing<String, Feature> TablaHashZn;
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
@@ -223,10 +228,15 @@ public class MVCModelo {
 	        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 
-	        FCollection g = new Gson().fromJson(bufferedReader, FCollection.class);
+	         g = new Gson().fromJson(bufferedReader, FCollection.class);
 	        
 	        System.out.println("Zonas cargadas por JSON fueron: " +g.features[g.features.length-1].properties.MOVEMENT_ID);
+<<<<<<< HEAD
 	        return g;
+=======
+System.out.println(g.features[0].geometry.coordinates);
+	    return g;
+>>>>>>> b55a971c8a3cd715418d40a8b54c5867aec7faee
 	    }
 
 	    
@@ -258,12 +268,14 @@ public class MVCModelo {
 	    {
 	        String type;
 	        Feature[] features;
+	        
 	    }
 	    
 	    
 	    //----------------------------------------------------------
 	    //METODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 	    
+<<<<<<< HEAD
 	    public void function1()
 	    {
 	    	tablaDeHashLinearProbing tablaNombres = new tablaDeHashLinearProbing();
@@ -326,8 +338,15 @@ public class MVCModelo {
 	    	}
 	    	
 	    	
+=======
+	    public void function1() {
+	    	String prueba;
+	       prueba= g.features[0].properties.DISPLAY_NAME;
+>>>>>>> b55a971c8a3cd715418d40a8b54c5867aec7faee
 	    }
 	    
+	   
+	
 	    public void function2()
 	    {
 	    	
@@ -351,19 +370,175 @@ public class MVCModelo {
 	    	
 	    }
 	    
-	    public void function4()
+	    /**
+	     * Retorna las N zonas mas al norte. 
+	     * @param nZonas cantidad de zonas que se retornaran.
+	     * @return 
+	     */
+	    public tablaDeHashLinearProbing<String, double[]> function4(int nZonas)
 	    {
-	    	
+	    	tablaDeHashLinearProbing<String, double[]> retorno = new tablaDeHashLinearProbing<>();
+	        tablaDeHashLinearProbing<String, Feature> copia = table;  
+
+	        double LatitudMas = 0.0;
+	        String zonaId = "";
+	        String keyLatitudMas = "";
+	        String keyMas = "";
+	        
+	        double latTemp = 0.0; 
+	        String idTemp = ""; 
+	        double longTemp = 0.0;
+	        String KeyTemp = "";
+	        Feature zonaTemp; 
+
+	        double[] arrTempCoord = new double[2];
+
+	        while(nZonas>0)
+	        {
+	            Iterable iterable = copia.keys();
+		    	 Iterator iter = iterable.iterator();
+	            while(iter.hasNext()) 
+	            {
+	                String keyActual= (String) iter.next(); 
+	                Feature zonaActual = copia.get(keyActual); 
+
+	                double [][][][] Cords= zonaActual.geometry.coordinates; 
+	                int i=0;
+	                while(i<Cords.length)
+	                {
+	                    int j=0;
+	                    while(j<Cords[i].length)
+	                    {
+	                        int x=0;
+	                        while(x<Cords[i][j].length)
+	                        {
+	                            int y=0;
+	                            while(y<Cords[i][j][x].length)
+	                            {
+	                                double[] Cord = Cords[i][j][x]; 
+	                                double lat = Cord[1];
+	                                double lon = Cord[0];
+
+	                                Object[] nodo = new Object[3];
+
+	                                String llave= zonaActual.properties.MOVEMENT_ID;
+
+	                                nodo[0]= zonaActual.properties.scanombre;
+	                                nodo[1]= lat;
+	                                nodo[2]=lon;
+	                                		
+	                                latTemp = (double) nodo[1];
+	                                idTemp = (String)nodo[0];
+	                                longTemp = (double)nodo[2];
+	                                llave = KeyTemp;
+
+	                                y++;
+	                            }
+	                            x++;
+	                        }
+	                        j++;
+	                    }
+	                    i++;
+	                }
+
+
+	                if( latTemp > LatitudMas ) //Si la latitud de la pos. i,j,z es mayor a la actual, se cambia la mayor
+	                {
+	                    latTemp = LatitudMas;
+	                    idTemp = zonaId;
+	                    keyMas = KeyTemp; 
+
+	                    arrTempCoord[0] = latTemp; 
+	                    arrTempCoord[1] = longTemp; 
+
+	                }
+
+	            }
+
+	            copia.delete(keyMas);
+
+	            retorno.put(KeyTemp, arrTempCoord );
+
+	            nZonas--;
+	        }
+
+	        return retorno;
 	    }
+
 	    
-	    public void function5()
+	    public ArbolRojoNegro<String, Object[]> function5(double latitud, double longitud)
 	    {
-	    	
-	    }
+	    	 ArbolRojoNegro<String,Object[]>retornar= new ArbolRojoNegro();
+
+	         DinamicArray dn = (DinamicArray) TablaHashZn.keys(); 
+	         Iterator iter = dn.iterator(); 
+
+	         while(iter.hasNext())
+	         {
+	             String key= (String) iter.next(); 
+
+	             Feature zonaActual = TablaHashZn.get(key); 
+
+	             double [][][][] Cord= zonaActual.geometry.coordinates;
+
+	             int i=0;
+	             while(i < Cord.length)
+	             {
+	                 int j=0;
+	                 while(j < Cord[i].length)
+	                 {
+	                     int x = 0;
+	                     while(x < Cord[i][j].length)
+	                     {
+	                         int y = 0;
+	                         while(y < Cord[i][j][x].length)
+	                         {
+	                             double[] coordenada= Cord[i][j][y];
+
+	                             double lat = coordenada[1];
+	                             double lon = coordenada[0];
+
+	                             if( lat == latitud && lon == longitud) 
+	                             {
+	                                 if(Math.floor(lat*100) == Math.floor(latitud*100) && Math.floor(lon*100) == Math.floor(longitud*100))
+	                                 {
+	                                     Object[] nodo= new Object[3];
+	                                     nodo[0]=zonaActual.properties.scanombre;
+	                                     nodo[1]= lat;
+	                                     nodo[2]= lon;
+	                                     String llave= zonaActual.properties.MOVEMENT_ID;
+	                                     retornar.put(llave, nodo);
+	                                 }
+	                             }
+	                             y++;
+	                         }
+	                         x++;
+	                     }
+	                     j++;
+	                 }
+	                 i++;
+	             }   
+	         }
+
+	         return retornar;
+	     }
 	    
-	    public void function6()
+	    public void function6(int NViajes, int limite_bajo, int limite_alto)
 	    {
-	    	
+	    	 Iterable iterable = arbolMes.keys();
+	    	 Iterator iter = iterable.iterator();
+	    	 int n=0;
+	    	 while(iter.hasNext() && n<NViajes)
+	    	 {
+	    		 int KeyCurrent =(int)iter.next();
+	    		 Viaje current = (Viaje) arbolMes.get(KeyCurrent);
+	    		 if((current.getStandard_deviation_travel_time() >= limite_bajo)&&(current.getStandard_deviation_travel_time()<=limite_alto))
+	    		 {
+	    			 System.out.println("Zona Origen: " + current.getSourceid() + "Zona destino: " + current.getDstid() + "Mes: " + current.getHourDayMonth() + "Desviación estandar: " + current.getStandard_deviation_travel_time());
+	    			 n++;
+	    		 }
+	    		 
+	    	 }
 	    }
 	    
 	    public void function7()

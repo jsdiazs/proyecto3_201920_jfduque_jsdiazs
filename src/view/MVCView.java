@@ -37,6 +37,18 @@ public class MVCView
 			// TODO implementar
 		}
 
+		public void printFuncion21() 
+		{
+			System.out.println("Ingrese la cantidad de zonas que desea retornar: ");
+		}
+		public void printFuncion22() 
+		{
+			System.out.println("Ingrese Una latitud");
+		}
+		public void printFuncion22l() 
+		{
+			System.out.println("Ingrese Una longitud");
+		}
 		public void printFuncion31() {
 			System.out.println("Ingrese el numero de viajes que desea consultar: ");
 		}
@@ -47,4 +59,15 @@ public class MVCView
 		public void printFuncion33() {
 			System.out.println("Ingrese el tiempo final: ");
 		}
+		public void printFuncion61() {
+			System.out.println("Ingrese el numero de viajes a consultar: ");
+		}
+		
+		public void printFuncion62() {
+			System.out.println("Ingrese el tiempo de limite_bajo: ");
+		}
+		public void printFuncion63() {
+			System.out.println("Ingrese el tiempo de limite_alto: ");
+		}
+		
 }

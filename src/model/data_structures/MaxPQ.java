@@ -138,12 +138,6 @@ public class MaxPQ<T extends DinamicArray>
 	        return isMaxHeapOrdered(left) && isMaxHeapOrdered(right);
 	    }
 
-
-		public Iterator iterator() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
 	}
 
 	/******************************************************************************

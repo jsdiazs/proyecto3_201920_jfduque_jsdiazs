@@ -66,17 +66,35 @@ public class Controller {
 				funciones();
 				break;
 			case 4:
-				modelo.function4();
-				
+				view.printFuncion21();
+				Scanner lector21 = new Scanner(System.in);
+				int n21 = lector21.nextInt();
+				modelo.function4(n21);
 				funciones();
 				break;
 			case 5:
-				modelo.function5();
+				view.printFuncion22();
+				Scanner lector22 = new Scanner(System.in);
+				double n22 = lector22.nextInt();
+				view.printFuncion22l();
+				Scanner lector22l = new Scanner(System.in);
+				double n22l = lector22l.nextInt();
+				modelo.function5(n22, n22l);
 				
 				funciones();
 				break;
 			case 6:
-				modelo.function6();
+
+				view.printFuncion61();
+				Scanner lectorNv = new Scanner(System.in);
+				int nv = lectorNv.nextInt();
+				view.printFuncion62();
+				Scanner lectorlim_b = new Scanner(System.in);
+				int lim_b = lectorlim_b.nextInt();
+				view.printFuncion63();
+				Scanner lectorlim_a= new Scanner(System.in);
+				int lim_a = lectorlim_a.nextInt();
+				modelo.function3(nv, lim_b, lim_a);
 				
 				funciones();
 				break;
