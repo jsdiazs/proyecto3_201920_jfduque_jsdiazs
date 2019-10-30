@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.opencsv.CSVReader;
@@ -16,6 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 import model.data_structures.ArbolRojoNegro;
+import model.data_structures.LinkedQueue;
 import model.data_structures.MaxPQ;
 import model.data_structures.tablaDeHashLinearProbing;
 
@@ -34,6 +36,10 @@ public class MVCModelo {
 	private MaxPQ queue;
 	
 	private tablaDeHashLinearProbing table;
+	
+	private FCollection g;
+
+	private tablaDeHashLinearProbing<String, Feature> TablaHashZn;
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
@@ -211,10 +217,10 @@ public class MVCModelo {
 	        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 
-	        FCollection g = new Gson().fromJson(bufferedReader, FCollection.class);
+	         g = new Gson().fromJson(bufferedReader, FCollection.class);
 	        
 	        System.out.println("Zonas cargadas por JSON fueron: " +g.features[g.features.length-1].properties.MOVEMENT_ID);
-
+System.out.println(g.features[0].geometry.coordinates);
 	    }
 
 	    
@@ -246,17 +252,19 @@ public class MVCModelo {
 	    {
 	        String type;
 	        Feature[] features;
+	        
 	    }
 	    
 	    
 	    //----------------------------------------------------------
 	    //METODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 	    
-	    public void function1()
-	    {
-	    	
+	    public void function1() {
+	    	String prueba;
+	       prueba= g.features[0].properties.DISPLAY_NAME;
 	    }
 	    
+	
 	    public void function2()
 	    {
 	    	
@@ -267,19 +275,195 @@ public class MVCModelo {
 	    	
 	    }
 	    
-	    public void function4()
+	    /**
+	     * Retorna las N zonas mas al norte. 
+	     * @param nZonas cantidad de zonas que se retornaran.
+	     */
+	    public void function4(int nZonas)
 	    {
-	    	
+	    	tablaDeHashLinearProbing<String, double[]> retorno = new tablaDeHashLinearProbing<>();
+	        tablaDeHashLinearProbing<String, Feature> copia = TablaHashZn;  
+
+	        double LatitudMas = 0.0;
+	        String zonaId = "";
+	        String keyLatitudMas = "";
+	        String keyMas = "";
+	        
+	        double latTemp = 0.0; 
+	        String nomTemp = ""; 
+	        double longTemp = 0.0;
+	        String llaveTemp = "";
+	        Feature zonaTemp; 
+
+	        double[] arrTempCoord = new double[2];
+
+	        while(n>0)
+	        {
+	            LinkedQueue que = (LinkedQueue) copia.keys(); 
+	            Iterator iter = que.iterator();
+
+	            while(iter.hasNext()) //Iterar sobre la copia de Keys
+	            {
+	                String keyActual= (String) iter.next(); //Key actual
+
+	                Feature zona = copia.get(keyActual);  //Valor de la Key actual, es decir la zona. 
+
+	                double [][][][] coordenadas= zona.getGeometrias().getCoordinates(); //Arreglo de coordenadas de la zona
+
+
+
+
+	                int i=0;
+	                while(i<coordenadas.length)
+	                {
+	                    int j=0;
+	                    while(j<coordenadas[i].length)
+	                    {
+	                        int z=0;
+	                        while(z<coordenadas[i][j].length)
+	                        {
+	                            int w=0;
+	                            while(w<coordenadas[i][j][z].length)
+	                            {
+	                                double[] coordenada = coordenadas[i][j][z]; //Coordenadas en la posicion i, j & z 
+
+	                                double lat = coordenada[1];
+	                                double lon = coordenada[0];
+
+	                                Object[] nodo = new Object[3];
+
+	                                String llave= zona.getPropiedades().getMOVEMENT_ID();
+
+	                                nodo[0]= zona.getPropiedades().getScanombre();
+	                                nodo[1]= lat;
+	                                nodo[2]=lon;
+
+
+
+
+	                                //Asignar a las variables temporales AFUERA del ciclo
+	                                latTemp = (double) nodo[1];
+	                                nomTemp = (String)nodo[0];
+	                                longTemp = (double)nodo[2];
+	                                llave = llaveTemp;
+
+	                                w++;
+	                            }
+	                            z++;
+	                        }
+	                        j++;
+	                    }
+	                    i++;
+	                }
+
+
+	                if( latTemp > latitudMax ) //Si la latitud de la pos. i,j,z es mayor a la actual, se cambia la mayor
+	                {
+	                    latTemp = latitudMax;
+
+	                    nomTemp = nombreZona;
+	                    keyMax = llaveTemp; 
+
+	                    arrTempCoord[0] = latTemp; 
+	                    arrTempCoord[1] = longTemp; 
+
+	                }
+
+	            }
+
+	            copia.delete(keyMax);
+
+	            retorno.put(llaveTemp, arrTempCoord );
+
+	            n--;
+	        }
+
+
+
+
+
+
+
+	        return retorno;
+	    }
+
+
 	    }
 	    
-	    public void function5()
+	    public ArbolRojoNegro<String, Object[]> function5(double latitud, double longitud)
 	    {
-	    	
-	    }
+	    	 ArbolRojoNegro<String,Object[]>retornar= new ArbolRojoNegro();
+
+	         LinkedQueue lq = (LinkedQueue) TablaHashZn.keys(); 
+	         Iterator iter = lq.iterator(); 
+
+	         while(iter.hasNext())
+	         {
+	             String key= (String) iter.next(); 
+
+	             Feature zonaActual = TablaHashZn.get(key); 
+
+	             double [][][][] Cord= zonaActual.geometry.coordinates;
+
+	             int i=0;
+	             while(i < Cord.length)
+	             {
+	                 int j=0;
+	                 while(j < Cord[i].length)
+	                 {
+	                     int x = 0;
+	                     while(x < Cord[i][j].length)
+	                     {
+	                         int y = 0;
+	                         while(y < Cord[i][j][x].length)
+	                         {
+	                             double[] coordenada= Cord[i][j][y];
+
+	                             double lat = coordenada[1];
+	                             double lon = coordenada[0];
+
+	                             if( lat == latitud && lon == longitud) 
+	                             {
+	                                 if(Math.floor(lat*100) == Math.floor(latitud*100) && Math.floor(lon*100) == Math.floor(longitud*100))
+	                                 {
+	                                     Object[] nodo= new Object[3];
+	                                     nodo[0]=zonaActual.properties.scanombre;
+	                                     nodo[1]= lat;
+	                                     nodo[2]= lon;
+	                                     String llave= zonaActual.properties.MOVEMENT_ID;
+	                                     retornar.put(llave, nodo);
+	                                 }
+	                             }
+	                             y++;
+	                         }
+	                         x++;
+	                     }
+	                     j++;
+	                 }
+	                 i++;
+	             }   
+	         }
+
+	         return retornar;
+	     }
 	    
 	    public void function6()
 	    {
-	    	
+	        MaxPQ<TravelTime> copia= heapMes;   
+	        MaxHeapCP<TravelTime> retorno= new MaxHeapCP();
+
+	        while(!copia.isEmpty()&& (N)>0) //Recorrer la copia
+	        {
+	            TravelTime actual = (TravelTime) copia.delMax(); //Borrar el TravelTime actual para despues agregarlo al retorno
+	            double desviacionEst = actual.getStandardDeviationTravelTime();
+
+	            if( desviacionEst > limiteBajo && desviacionEst < limiteAlto ) //Rango de desviación estandar
+	            {
+	                retorno.insert(actual); //Se inserta en el retorno con la condicion de que esté en el rango
+	                N--;
+	            }
+	        }
+	        return retorno;
 	    }
 	    
 	    public void function7()
