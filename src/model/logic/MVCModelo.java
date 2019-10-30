@@ -259,36 +259,8 @@ public class MVCModelo {
 	    
 	    public void function1()
 	    {
-	    	int a = 0;
-	    	int b = 0;
-	    	int c = 0;
-	    	int d = 0;
-	    	int e = 0;
-	    	int f = 0;
-	    	int g = 0;
-	    	int h = 0;
-	    	int i = 0;
-	    	int j = 0;
-	    	int k = 0;
-	    	int l = 0;
-	    	int m = 0;
-	    	int n = 0;
-	    	int ñ = 0;
-	    	int o = 0;
-	    	int p = 0;
-	    	int q = 0;
-	    	int r = 0;
-	    	int s = 0;
-	    	int t = 0; 
-	    	int u = 0;
-	    	int v = 0;
-	    	int w = 0;
-	    	int x = 0;
-	    	int y = 0;
-	    	int z = 0;
+	    	tablaDeHashLinearProbing tablaNombres = new tablaDeHashLinearProbing();
 	    	
-	    	
-
 	    }
 	    
 	    public void function2()
@@ -298,6 +270,19 @@ public class MVCModelo {
 	    
 	    public void function3(int pN, int pLb, int pLa)
 	    {
+	    	Iterable iterable = arbolMes.keys();
+	    	Iterator iter = iterable.iterator();
+	    	int n = 0;
+	    	while(iter.hasNext() && n < pN)
+	    	{
+	    		int keyActual = (int) iter.next();
+	    		Viaje actual = (Viaje) arbolMes.get(keyActual);
+	    		if((actual.getMean_travel_time() >= pLb) && (actual.getMean_travel_time() <= pLa))
+	    		{
+	    			System.out.println("Origen: " + actual.getSourceid() + " --- Destino: " + actual.getDstid() + " --- Mes: " + actual.getHourDayMonth() + " --- Tiempo: " + actual.getMean_travel_time());
+	    			n++;
+	    		}
+	    	}
 	    	
 	    }
 	    
