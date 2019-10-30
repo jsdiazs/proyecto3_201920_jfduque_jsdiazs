@@ -231,12 +231,8 @@ public class MVCModelo {
 	         g = new Gson().fromJson(bufferedReader, FCollection.class);
 	        
 	        System.out.println("Zonas cargadas por JSON fueron: " +g.features[g.features.length-1].properties.MOVEMENT_ID);
-<<<<<<< HEAD
 	        return g;
-=======
-System.out.println(g.features[0].geometry.coordinates);
-	    return g;
->>>>>>> b55a971c8a3cd715418d40a8b54c5867aec7faee
+
 	    }
 
 	    
@@ -275,7 +271,6 @@ System.out.println(g.features[0].geometry.coordinates);
 	    //----------------------------------------------------------
 	    //METODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 	    
-<<<<<<< HEAD
 	    public void function1()
 	    {
 	    	tablaDeHashLinearProbing tablaNombres = new tablaDeHashLinearProbing();
@@ -336,20 +331,27 @@ System.out.println(g.features[0].geometry.coordinates);
 	    			System.out.println(nomb);
 	    		}
 	    	}
-	    	
-	    	
-=======
-	    public void function1() {
-	    	String prueba;
-	       prueba= g.features[0].properties.DISPLAY_NAME;
->>>>>>> b55a971c8a3cd715418d40a8b54c5867aec7faee
+	
 	    }
-	    
 	   
 	
-	    public void function2()
+	    public void function2(double pLong, double pLat)
 	    {
-	    	
+	    	Iterable iterable2 = table.keys();
+	    	Iterator iter2 = iterable2.iterator();
+	    	while(iter2.hasNext())
+	    	{
+	    		int actual = (int) iter2.next();
+	    		String longyLat = (String) table.get(actual);
+	    		
+	    		String[] longyLati = longyLat.split(",");
+	    		double longitud = Double.parseDouble(longyLati[0]);
+	    		double latitud = Double.parseDouble(longyLati[1]);
+	    		if(longitud == pLong && latitud == pLat)
+	    		{
+	    			System.out.println(longitud + "---" + latitud);
+	    		}
+	    	}
 	    }
 	    
 	    public void function3(int pN, int pLb, int pLa)
