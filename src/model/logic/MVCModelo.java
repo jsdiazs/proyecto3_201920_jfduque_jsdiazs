@@ -199,6 +199,13 @@ public class MVCModelo {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+				
+				try {
+					JSONReader();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	}
 		
 
@@ -206,7 +213,7 @@ public class MVCModelo {
 		//--------------------------------------------------------------------------------------
 		//JSON READER
 	
-	    public  void JSONReader() throws Exception 
+	    public  FCollection JSONReader() throws Exception 
 	    {
 
 	    	FileInputStream inputStream = new FileInputStream("data/bogota_cadastral.json");
@@ -219,7 +226,7 @@ public class MVCModelo {
 	        FCollection g = new Gson().fromJson(bufferedReader, FCollection.class);
 	        
 	        System.out.println("Zonas cargadas por JSON fueron: " +g.features[g.features.length-1].properties.MOVEMENT_ID);
-
+	        return g;
 	    }
 
 	    
@@ -260,6 +267,64 @@ public class MVCModelo {
 	    public void function1()
 	    {
 	    	tablaDeHashLinearProbing tablaNombres = new tablaDeHashLinearProbing();
+	    	tablaDeHashLinearProbing tablaCantidad = new tablaDeHashLinearProbing();
+	    	
+	    	FCollection g = null;
+			try {
+				g = JSONReader();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    	for(int i = 0; i < g.features.length; i++)
+	    	{
+	    		String nombre = g.features[i].properties.scanombre;
+	    		char comienza = nombre.charAt(0);
+	    		tablaNombres.put(i, nombre);
+	    		
+	    		if(!tablaCantidad.contains(comienza))
+	    		{
+	    			tablaCantidad.put(comienza, 1);
+	    		}
+	    		else
+	    		{
+	    			int cant = (int) tablaCantidad.get(comienza) + 1;
+	    			tablaCantidad.put(comienza, cant);
+	    		}
+	    		
+	    	}
+	    	
+	    	Iterable iterable = tablaCantidad.keys();
+	    	Iterator iter = iterable.iterator();
+	    	int cantMayor = 0;
+	    	char letra = 1;
+	    	while(iter.hasNext())
+	    	{
+	    		char actual = (char) iter.next();
+	    		int cant = (int) tablaCantidad.get(actual);
+	    		if(cant > cantMayor)
+	    		{
+	    			cantMayor = cant;
+	    			letra = actual;
+	    		}
+	    	}
+	    	System.out.println("---------------------------------------------------------------------------------------------------------------------------------");
+	    	System.out.println("La letra que mas se repite al comienzo del nombre de una zona es: " + letra);
+	    	System.out.println("Se repite " + cantMayor + " veces y las zonas son:");
+	    	
+	    	Iterable iterable2 = tablaNombres.keys();
+	    	Iterator iter2 = iterable2.iterator();
+	    	while(iter2.hasNext())
+	    	{
+	    		int actual = (int) iter2.next();
+	    		String nomb = (String) tablaNombres.get(actual);
+	    		if(nomb.charAt(0) == letra)
+	    		{
+	    			System.out.println(nomb);
+	    		}
+	    	}
+	    	
 	    	
 	    }
 	    
