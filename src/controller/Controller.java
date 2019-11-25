@@ -43,89 +43,48 @@ public class Controller {
 			switch(option){
 			case 1:
 				modelo.function1();
-				
-				funciones();
 				break;
 			case 2:
-				
-				Scanner lectorlong = new Scanner(System.in);
-				int lng = lectorlong.nextInt();
-				view.printFuncion22l();
-				Scanner lectorlat = new Scanner(System.in);
-				int lbb = lectorlat.nextInt();
-				view.printFuncion22();
-				Scanner lectorlaa = new Scanner(System.in);
-				int laa = lectorlaa.nextInt();
-				modelo.function2(lbb,laa);
-				funciones();
+				modelo.function2();
 				break;
 			case 3:
-				view.printFuncion31();
-				Scanner lectorN = new Scanner(System.in);
-				int n = lectorN.nextInt();
-				view.printFuncion32();
-				Scanner lectorlb = new Scanner(System.in);
-				int lb = lectorlb.nextInt();
-				view.printFuncion33();
-				Scanner lectorla = new Scanner(System.in);
-				int la = lectorla.nextInt();
-				modelo.function3(n, lb, la);
-				
-				funciones();
+				modelo.function3();
 				break;
 			case 4:
-				view.printFuncion21();
-				Scanner lector21 = new Scanner(System.in);
-				int n21 = lector21.nextInt();
-				modelo.function4(n21);
-				funciones();
+				modelo.function4();
 				break;
 			case 5:
-				view.printFuncion22();
-				Scanner lector22 = new Scanner(System.in);
-				double n22 = lector22.nextInt();
-				view.printFuncion22l();
-				Scanner lector22l = new Scanner(System.in);
-				double n22l = lector22l.nextInt();
-				modelo.function5(n22, n22l);
-				
-				funciones();
+				modelo.function5();			
 				break;
 			case 6:
-
-				view.printFuncion61();
-				Scanner lectorNv = new Scanner(System.in);
-				int nv = lectorNv.nextInt();
-				view.printFuncion62();
-				Scanner lectorlim_b = new Scanner(System.in);
-				int lim_b = lectorlim_b.nextInt();
-				view.printFuncion63();
-				Scanner lectorlim_a= new Scanner(System.in);
-				int lim_a = lectorlim_a.nextInt();
-				modelo.function3(nv, lim_b, lim_a);
-				
-				funciones();
+				modelo.function5();
 				break;
 			case 7:
 				modelo.function7();
-				
-				funciones();
 				break;
 			case 8:
 				modelo.function8();
-				
-				funciones();
 				break;
 			case 9:
 				modelo.function9();
-				
-				funciones();
 				break;
 			case 10:
+				modelo.function10();
+				break;	
+			
+			case 11:
+				modelo.function11();
+				break;
+				
+			case 12:
+				modelo.function12();
+			break;  
+			
+			case 13:
 				System.out.println("--------- \n Hasta pronto !! \n---------"); 
 				lector.close();
 				fin = true;
-				break;	
+				break;
 			}
 			fin=true;
 		}
