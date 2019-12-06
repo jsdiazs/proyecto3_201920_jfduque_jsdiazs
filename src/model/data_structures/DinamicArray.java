@@ -24,11 +24,11 @@ public class DinamicArray <T extends Comparable <T>>implements IDinamicArray<T>
 	private T elementos[ ];
 
 	  /**
-     * Tamaño por defecto del arreglo
+     * Tamaï¿½o por defecto del arreglo
      */
     private static final int TAMAÑO_PROMEDIO = 5;
 	/**
-	 * Construir un arreglo con la capacidad dada por TAMAÑO_PROMEDIO.
+	 * Construir un arreglo con la capacidad dada por TAMAï¿½O_PROMEDIO.
 	 */
 	public DinamicArray()
 	{
@@ -38,8 +38,8 @@ public class DinamicArray <T extends Comparable <T>>implements IDinamicArray<T>
 	}
 	
 	/**
-	 * Construye un arreglo de acuerdo al tamaño maximo dado por parametro
-	 * @param pMax Tamaño maximo inicial
+	 * Construye un arreglo de acuerdo al tamaï¿½o maximo dado por parametro
+	 * @param pMax Tamaï¿½o maximo inicial
 	 */
 	public DinamicArray(int pMax)
 	{

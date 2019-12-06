@@ -1,21 +1,11 @@
 package model.logic;
 
 import java.awt.Taskbar.Feature;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Iterator;
 
-import com.google.gson.Gson;
 import com.opencsv.CSVReader;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-
-import model.data_structures.DinamicArray;
 
 import model.data_structures.tablaDeHashLinearProbing;
 
@@ -76,7 +66,7 @@ public class MVCModelo {
 				totalViajes += w;
 				
 
-				System.out.println("El número de viajes por semana fue: " + w);
+				System.out.println("El nï¿½mero de viajes por semana fue: " + w);
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block

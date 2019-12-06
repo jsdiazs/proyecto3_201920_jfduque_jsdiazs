@@ -1,12 +1,11 @@
 
 package model.data_structures;
-import model.logic.Viaje;;
 public interface IDinamicArray<T extends Comparable<T>> extends Iterable 
 
 {
 	/**
-	 * Tamaño del arreglo
-	 * @return tamaño del arreglo
+	 * Tamaï¿½o del arreglo
+	 * @return tamaï¿½o del arreglo
 	 */
     int darTamano();
    
@@ -18,7 +17,7 @@ public interface IDinamicArray<T extends Comparable<T>> extends Iterable
     void set(int pIndex, T pValue);
     
     /**
-     * Retorna el item en la respectiva posición del arreglo
+     * Retorna el item en la respectiva posiciï¿½n del arreglo
      * @param pIndex Posicion del arreglo
      * @return elemento en el arreglo
      */
@@ -53,5 +52,5 @@ public interface IDinamicArray<T extends Comparable<T>> extends Iterable
      * Iterador usado para navegar atra vez del arreglo.
      * @return retorna el iterador.
      */
-    DinamicArrayIterator<T> iterator();
+
 }

@@ -1,8 +1,9 @@
 package model.data_structures;
+
 public class tablaDeHashLinearProbing<Key, Value> extends DinamicArray
 {
     /*
-     * Tamaño de la tabla en caso de no ser inicializada con un valor especifico.
+     * Tamaï¿½o de la tabla en caso de no ser inicializada con un valor especifico.
      */
 	private static final int CAPACIDAD_INICIAL = 44;
 
@@ -11,7 +12,7 @@ public class tablaDeHashLinearProbing<Key, Value> extends DinamicArray
      */
     private int n;     
     /**
-     * Tamaño de la tabla
+     * Tamaï¿½o de la tabla
      */
     private int m;         
     /**
@@ -38,7 +39,7 @@ public class tablaDeHashLinearProbing<Key, Value> extends DinamicArray
 
     public int size() 
     {
-        return n;
+    	return n;
     }
     
     public boolean isEmpty() 
