@@ -14,7 +14,6 @@ public class Vertices
 	//Zona del vertice
 	private double MOVEMENT_ID;
 	
-	private priorityQu
 	
 	public Vertices(int pId, double pLongitud, double pLatitud, double pMOVEMENT_ID)
 	{
