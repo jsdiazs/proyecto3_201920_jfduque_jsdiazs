@@ -4,9 +4,11 @@ import java.awt.Taskbar.Feature;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 import com.opencsv.CSVReader;
 
+import model.data_structures.LinkedQueue;
 import model.data_structures.tablaDeHashLinearProbing;
 
 
@@ -21,14 +23,18 @@ public class MVCModelo {
 
 	
 	
-	private tablaDeHashLinearProbing table;
+	private tablaDeHashLinearProbing<Integer, Viaje> tableViajes;
+	
+	private tablaDeHashLinearProbing<Integer, Vertices> tableVertices;
+	
 
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public MVCModelo()
 	{
-		table = new tablaDeHashLinearProbing();
+		tableViajes = new tablaDeHashLinearProbing<Integer, Viaje>();
+		tableVertices = new tablaDeHashLinearProbing<Integer, Vertices>();
 	}
 
 	//----------------------------------------------------------------------------------------
@@ -58,15 +64,12 @@ public class MVCModelo {
 					float geometric_standard_deviation_travel_time = Float.parseFloat(nextline[6]);
 					w++;
 					Viaje nuevo = new Viaje(sourceid, dstid, dayHourMonth, mean_travel_time, standard_deviation_travel_time, geometric_mean_travel_time, geometric_standard_deviation_travel_time);
-					table.put(w, nuevo);
+					tableViajes.put(sourceid, nuevo);
 					nextline = readerWeek.readNext();					
 				}
 				readerWeek.close();
-				
-				totalViajes += w;
-				
 
-				System.out.println("El n�mero de viajes por semana fue: " + w);
+				System.out.println("El numero de viajes por semana fue: " + tableViajes.size());
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -96,13 +99,12 @@ public class MVCModelo {
 					double MOV_ID = Double.parseDouble(datos[3]);
 					f++;
 					Vertices nuevo = new Vertices(id, longitud, latitud, MOV_ID);
-					table.put(f, nuevo);
+					tableVertices.put(id, nuevo);
 					nextline1 = readerVertices.readNext();
 				}
 				readerVertices.close();
-				
-				totalVertices+=f;
-				System.out.println("El numero de vertices es: " + f);
+
+				System.out.println("El numero de vertices es: " + tableVertices.size());
 			}catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -117,15 +119,40 @@ public class MVCModelo {
 			try 
 			{
 				readerArcos = new CSVReader(new FileReader("./data/bogota_arcos.txt"));
-				String[] nextline1 = readerArcos.readNext();		
+				String[] nextline2 = readerArcos.readNext();		
 				int x=0;
-				while(nextline1 !=null)
+				while(nextline2 !=null)
 				{
-					int id = Integer.parseInt(nextline1[0]);
-					nextline1 = readerArcos.readNext();
+					String linea = nextline2[0];
+					String[] datos = linea.split(" ");
+					int idNodo = Integer.parseInt(datos[0]);  
+					Vertices nodo = (Vertices) tableVertices.get(idNodo);
+					if(nodo != null)
+					{
+						LinkedQueue listaAd = nodo.darListaAdyacencia();
+						for(int i = 1; i < datos.length; i++)
+						{
+							int idNodoConecetado = Integer.parseInt(datos[i]);
+							Vertices nodoConectado = (Vertices) tableVertices.get(idNodoConecetado);
+							listaAd.enqueue(nodoConectado);
+						}
+
+						
+					}
+					nextline2 = readerArcos.readNext();
+					x++;
 				}
-				System.out.println("El numero de vertices es: " + x);
+				Vertices prueba=tableVertices.get(175144);
+				LinkedQueue listaprueba=prueba.darListaAdyacencia();
+						Iterator iter=listaprueba.iterator();
+						
+						while(iter.hasNext()) {
+							Vertices actual=(Vertices) iter.next();
+							System.out.println(actual.getId());
+						}
+				System.out.println("El numero de arcos es: " + x);
 				readerArcos.close();
+				
 			}catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

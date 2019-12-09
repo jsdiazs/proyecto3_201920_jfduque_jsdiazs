@@ -1,5 +1,7 @@
 package model.logic;
 
+import model.data_structures.LinkedQueue;
+
 public class Vertices 
 {
 	//Identificador del vertice
@@ -14,6 +16,9 @@ public class Vertices
 	//Zona del vertice
 	private double MOVEMENT_ID;
 	
+	//lista de adyacencia
+	private LinkedQueue<Vertices> listaAdyacencia;
+	
 	
 	public Vertices(int pId, double pLongitud, double pLatitud, double pMOVEMENT_ID)
 	{
@@ -21,6 +26,7 @@ public class Vertices
 		longitud=pLongitud;
 		latitud=pLatitud;
 		MOVEMENT_ID=pMOVEMENT_ID;
+		listaAdyacencia = new LinkedQueue<Vertices>();
 	}
 
 	public int getId() {
@@ -53,6 +59,11 @@ public class Vertices
 
 	public void setMOVEMENT_ID(double mOVEMENT_ID) {
 		MOVEMENT_ID = mOVEMENT_ID;
+	}
+	
+	public LinkedQueue darListaAdyacencia()
+	{
+		return listaAdyacencia;
 	}
 	
 }
