@@ -144,12 +144,12 @@ public class tablaDeHashLinearProbing<Key, Value> extends DinamicArray
     }
 
 
-    public Iterable<Key> keys() {
-        DinamicArray array = new DinamicArray();
-        for (int i = 0; i < m; i++)
-            if (keys[i] != null) array.agregar((Comparable) keys[i]);;
-        return array;
-    }
+   // public Iterable<Key> keys() {
+     //   DinamicArray array = new DinamicArray();
+       // for (int i = 0; i < m; i++)
+         //   if (keys[i] != null) array.agregar((Comparable) keys[i]);;
+        //return array;
+    //}
 
     private boolean verificar() 
     {

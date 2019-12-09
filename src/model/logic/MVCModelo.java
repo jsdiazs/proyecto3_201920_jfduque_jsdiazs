@@ -142,14 +142,6 @@ public class MVCModelo {
 					nextline2 = readerArcos.readNext();
 					x++;
 				}
-				Vertices prueba=tableVertices.get(175144);
-				LinkedQueue listaprueba=prueba.darListaAdyacencia();
-						Iterator iter=listaprueba.iterator();
-						
-						while(iter.hasNext()) {
-							Vertices actual=(Vertices) iter.next();
-							System.out.println(actual.getId());
-						}
 				System.out.println("El numero de arcos es: " + x);
 				readerArcos.close();
 				

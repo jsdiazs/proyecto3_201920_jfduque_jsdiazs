@@ -8,7 +8,7 @@ package model.data_structures;
  *
  */
 @SuppressWarnings("unchecked")
-public class DinamicArray <T extends Comparable <T>>implements IDinamicArray<T> 
+public class DinamicArray <T> 
 {
 	/**
 	 * Capacidad maxima del arreglo
@@ -140,9 +140,5 @@ public class DinamicArray <T extends Comparable <T>>implements IDinamicArray<T>
         tamanoAct = 0;
 	}
 
-	public DinamicArrayIterator<T> iterator() 
-	{
-		return new DinamicArrayIterator<>(this);
-	}
 
 }
